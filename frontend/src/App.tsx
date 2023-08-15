@@ -8,6 +8,7 @@ import {
   Checkbox,
   Typography,
   FormControlLabel,
+  CircularProgress,
 } from "@mui/material";
 import { CoolBackendClient } from "./clients/CoolBackendClient";
 import { IEmployee, ISeededCheck } from "./types";
@@ -20,10 +21,17 @@ function App() {
   const [employees, setEmployees] = useState<Array<IEmployee>>([]);
   const [users, setUsers] = useState<Array<string>>([]);
   const [checks, setChecks] = useState<Array<ISeededCheck>>([]);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
 
   const addUser = (empID: string) => {
-    users.push(empID);
-    setUsers(users);
+    const isUserSelected = users.includes(empID);
+
+    if (isUserSelected) {
+      const tempUsers = users.filter((user) => user !== empID);
+      setUsers(tempUsers);
+    } else {
+      setUsers([...users, empID]);
+    }
   };
 
   const fetchEmployees = async () => {
@@ -36,8 +44,10 @@ function App() {
   }, []);
 
   const createCheck = async () => {
+    setShowLoader(true);
     const checks = await backendClient.generatePayrollChecks(users);
     setChecks(checks);
+    setShowLoader(false);
   };
 
   return (
@@ -78,7 +88,9 @@ function App() {
         </div>
         <Box>
           <Typography variant="h6">Employee checks for Aug 14 2023</Typography>
-          {checks.length && (
+          {showLoader ? (
+            <CircularProgress />
+          ): checks.length > 0 && (
             <Box
               sx={{
                 display: "flex",

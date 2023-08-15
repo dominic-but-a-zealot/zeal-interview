@@ -36,3 +36,29 @@
     transform: rotate(360deg);
   }
 }
+
+.checkWrapper {
+  border: 1px solid #444;
+  border-radius: 4px;
+  display: flex;
+  padding: 16px;
+  width: 400px;
+}
+
+.payInfo {
+  justify-content: space-between;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.childRow {
+  justify-content: space-between;
+}
