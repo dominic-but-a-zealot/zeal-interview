@@ -10,13 +10,14 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { CoolBackendClient } from "./clients/CoolBackendClient";
-import { ISeededCheck } from "./types";
+import { IEmployee, ISeededCheck } from "./types";
 import { EmployeeCheck } from "./components/EmployeeCheck";
 
 function App() {
   // TODO: Fix adding users
   // TODO: Get checks for a list of users
   const backendClient = new CoolBackendClient();
+  const [employees, setEmployees] = useState<Array<IEmployee>>([]);
   const [users, setUsers] = useState<Array<string>>([]);
   const [checks, setChecks] = useState<Array<ISeededCheck>>([]);
 
@@ -24,6 +25,15 @@ function App() {
     users.push(empID);
     setUsers(users);
   };
+
+  const fetchEmployees = async () => {
+    const emps = await backendClient.getEmployees();
+    setEmployees(emps);
+  };
+
+  React.useEffect(() => {
+    fetchEmployees();
+  }, []);
 
   const createCheck = async () => {
     const checks = await backendClient.generatePayrollChecks(users);
@@ -33,7 +43,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Welcome to Love Engineering Interviews Inc.
+        Welcome to Federation Payroll Inc.
       </header>
       <Typography variant="h3" mt={1} ml={2} textAlign={"left"}>
         Upcoming payroll
@@ -47,7 +57,7 @@ function App() {
             alignItems={"flex-start"}
             sx={{ display: "flex", flexDirection: "column" }}
           >
-            {AllEmployees.map((emp) => (
+            {employees.map((emp) => (
               <Box>
                 <FormControlLabel
                   control={<Checkbox onChange={() => addUser(emp.id)} />}

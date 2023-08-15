@@ -18,6 +18,8 @@ export class CoolBackendClient {
     this.updatedAddress = {};
   }
 
+  getEmployees = () => Promise.resolve(AllEmployees)
+
   generatePayrollChecks = (users: Array<string>) =>
     Promise.resolve(
       users.map(CreateCheck("pre-processing")).map((a) => ({
