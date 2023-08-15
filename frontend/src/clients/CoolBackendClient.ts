@@ -20,14 +20,17 @@ export class CoolBackendClient {
 
   getEmployees = () => Promise.resolve(AllEmployees)
 
-  generatePayrollChecks = (users: Array<string>) =>
-    Promise.resolve(
-      users.map(CreateCheck("pre-processing")).map((a) => ({
-        ...a,
-        employee: AllEmployees.find((em) => em.id === a.employeeID),
-        workaddressID: this.updatedAddress[a.employeeID] ?? a.workAddressID,
-      })),
-    );
+  generatePayrollChecks = (users: Array<string>) => new Promise((resolve,reject)=>{
+      setTimeout(()=>{
+          resolve(
+            users.map(CreateCheck("pre-processing")).map((a) => ({
+              ...a,
+              employee: AllEmployees.find((em) => em.id === a.employeeID),
+              workaddressID: this.updatedAddress[a.employeeID] ?? a.workAddressID,
+            })),
+          );
+      },1500)
+  })
 
   getWorkAddress = (workAddressID: string) =>
     Promise.resolve(AllWorkAddresses.find(({ id }) => id === workAddressID));

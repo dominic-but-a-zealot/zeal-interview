@@ -36,7 +36,7 @@ function App() {
   }, []);
 
   const createCheck = async () => {
-    const checks = await backendClient.generatePayrollChecks(users);
+    const checks = await backendClient.generatePayrollChecks(users) as Array<ISeededCheck>;
     setChecks(checks);
   };
 
