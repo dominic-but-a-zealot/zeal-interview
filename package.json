@@ -1,0 +1,14 @@
+{
+  "name": "payroll-manager",
+  "version": "1.0.0",
+  "description": "Managers a series of payroll checks",
+  "main": "index.js",
+  "author": "zeal-inc",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.5"
+  }
+}
